@@ -22,6 +22,19 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -29,4 +42,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function pets(): HasMany
+    {
+        return $this->hasMany(Pet::class);
+    }
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
+
 }
