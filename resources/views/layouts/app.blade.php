@@ -65,21 +65,112 @@
 
             </ul>
 
+
+            <ul class="navbar-nav ms-auto">
+
+                @guest
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Login
+                        </a>
+                    </li>
+
+                @endguest
+
+
+                @auth
+
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            <i class="bi bi-person-circle"></i>
+                            {{ Auth::user()->name }}
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+
+                        <form
+                            method="POST"
+                            action="{{ route('logout') }}"
+                        >
+                            @csrf
+
+                            <button
+                                type="submit"
+                                class="nav-link btn btn-link"
+                            >
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                @endauth
+
+            </ul>
+
         </div>
+
     </div>
 </nav>
+
+
+<div class="container mt-3">
+
+    @if (session('success'))
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+            {{ session('success') }}
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+
+        </div>
+
+    @endif
+
+    @if (session('error'))
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+
+            {{ session('error') }}
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+
+        </div>
+
+    @endif
+
+</div>
+
 
 <main>
     @yield('content')
 </main>
 
+
 <footer class="bg-dark text-white py-4 mt-5">
     <div class="container text-center">
+
         <small>
             &copy; {{ date('Y') }} VetCare
         </small>
+
     </div>
 </footer>
 
 </body>
+
 </html>

@@ -15,7 +15,13 @@ class PetController extends Controller
      */
     public function index(Request $request)
     {
-        $pets = Pet::with(['user', 'species'])
+        $query = Pet::with(['user', 'species']);
+
+        if (auth()->user()->hasRole('user')) {
+            $query->where('user_id', auth()->id());
+        }
+
+        $pets = $query
             ->when($request->search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })
@@ -31,7 +37,7 @@ class PetController extends Controller
 
     public function create()
     {
-        $users = User::where('role', 'user')
+        $users = User::role('user')
             ->orderBy('name')
             ->get();
 
@@ -63,6 +69,13 @@ class PetController extends Controller
 
     public function show(Pet $pet)
     {
+        if (
+            auth()->user()->hasRole('user')
+            && $pet->user_id !== auth()->id()
+        ) {
+            abort(403);
+        }
+
         $pet->load([
             'user',
             'species',
@@ -76,7 +89,7 @@ class PetController extends Controller
 
     public function edit(Pet $pet)
     {
-        $users = User::where('role', 'user')
+        $users = User::role('user')
             ->orderBy('name')
             ->get();
 

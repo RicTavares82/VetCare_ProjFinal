@@ -16,36 +16,27 @@
                 </p>
             </div>
 
+            @role('admin')
+
             <a href="{{ route('pets.create') }}" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i>
                 Novo animal
             </a>
 
+            @endrole
+
         </div>
-
-
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show">
-
-                {{ session('success') }}
-
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-                </button>
-
-            </div>
-        @endif
 
 
         <div class="card shadow-sm">
 
             <div class="card-body">
 
-                <form method="GET"
-                      action="{{ route('pets.index') }}"
-                      class="row g-3 mb-4">
+                <form
+                    method="GET"
+                    action="{{ route('pets.index') }}"
+                    class="row g-3 mb-4"
+                >
 
                     <div class="col-md-6">
 
@@ -64,7 +55,8 @@
 
                         <select
                             name="species_id"
-                            class="form-select">
+                            class="form-select"
+                        >
 
                             <option value="">
                                 Todas as espécies
@@ -90,7 +82,8 @@
 
                         <button
                             type="submit"
-                            class="btn btn-outline-primary w-100">
+                            class="btn btn-outline-primary w-100"
+                        >
 
                             <i class="bi bi-search"></i>
                             Pesquisar
@@ -124,7 +117,9 @@
 
                             <tr>
 
-                                <td>{{ $pet->id }}</td>
+                                <td>
+                                    {{ $pet->id }}
+                                </td>
 
                                 <td>
                                     <strong>
@@ -162,25 +157,28 @@
 
                                 </td>
 
+
                                 <td class="text-end">
 
                                     <a
                                         href="{{ route('pets.show', $pet) }}"
                                         class="btn btn-sm btn-outline-secondary"
-                                        title="Ver">
-
+                                        title="Ver"
+                                    >
                                         <i class="bi bi-eye"></i>
-
                                     </a>
+
+
+                                    @role('admin')
 
                                     <a
                                         href="{{ route('pets.edit', $pet) }}"
                                         class="btn btn-sm btn-outline-primary"
-                                        title="Editar">
-
+                                        title="Editar"
+                                    >
                                         <i class="bi bi-pencil"></i>
-
                                     </a>
+
 
                                     <form
                                         action="{{ route('pets.destroy', $pet) }}"
@@ -195,13 +193,14 @@
                                         <button
                                             type="submit"
                                             class="btn btn-sm btn-outline-danger"
-                                            title="Eliminar">
-
+                                            title="Eliminar"
+                                        >
                                             <i class="bi bi-trash"></i>
-
                                         </button>
 
                                     </form>
+
+                                    @endrole
 
                                 </td>
 
@@ -210,7 +209,10 @@
                         @empty
 
                             <tr>
-                                <td colspan="7" class="text-center text-muted">
+                                <td
+                                    colspan="7"
+                                    class="text-center text-muted"
+                                >
                                     Nenhum animal encontrado.
                                 </td>
                             </tr>
