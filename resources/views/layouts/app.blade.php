@@ -46,22 +46,41 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a
+                        class="nav-link"
+                        href="{{ route('appointments.index') }}"
+                    >
                         Consultas
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Veterinários
-                    </a>
-                </li>
+                @role('admin')
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+
+                    <a
+                        class="nav-link"
+                        href="{{ route('veterinarians.index') }}"
+                    >
+                        Veterinários
+                    </a>
+
+                </li>
+
+                @endrole
+
+                @role('admin')
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{{ route('services.index') }}"
+                    >
                         Serviços
                     </a>
                 </li>
+
+                @endrole
 
             </ul>
 
